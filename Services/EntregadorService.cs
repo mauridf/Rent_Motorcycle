@@ -122,7 +122,7 @@ namespace Rent_Motorcycle.Services
             }
 
             // Retornar a URL da imagem no MinIO
-            return $"Imagem armazenada em MinIO com sucesso: {bucketName}/{objectName}";
+            return $"{bucketName}/{objectName}";
         }
     }
 
@@ -152,7 +152,7 @@ namespace Rent_Motorcycle.Services
             await File.WriteAllBytesAsync(filePath, imagem);
 
             // Retorna o caminho completo da imagem no armazenamento local
-            return $"Imagem armazenada Localmente: {filePath}";
+            return $"{filePath}";
         }
     }
 }

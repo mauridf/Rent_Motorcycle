@@ -76,7 +76,7 @@ namespace Rent_Motorcycle.Controllers
                 var contentDisposition = ContentDispositionHeaderValue.Parse(imagem.ContentDisposition);
                 nomeArquivo = contentDisposition.FileName.ToString().Trim('"');
 
-                nomeArquivo = Guid.NewGuid().ToString(); //Alterar o Nome do Arquivo
+                nomeArquivo = $"{Guid.NewGuid()}.png"; //Alterar o Nome do Arquivo para ficar padronizado
 
                 // Faz o upload da imagem
                 var imagemUrl = await _entregadorService.UploadImagem(imagemBytes, nomeArquivo);
