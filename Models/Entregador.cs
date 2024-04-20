@@ -29,8 +29,6 @@ namespace Rent_Motorcycle.Models
         [RegularExpression(@"^(A|B|AB)$")]
         public string TipoCNH { get; set; }
 
-        [Required]
-        [MaxLength]
-        public byte[] ImagemCNH { get; set; }
+        public string ImagemCNHUrl { get; set; }
     }
 }

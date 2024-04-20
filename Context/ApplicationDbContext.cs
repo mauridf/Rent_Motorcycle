@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Rent_Motorcycle.Models;
 using System;
 
@@ -18,6 +19,20 @@ namespace Rent_Motorcycle.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            //Configura um padrão para todas as propriedades DateTime
+            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            {
+                foreach (var property in entityType.GetProperties())
+                {
+                    if (property.ClrType == typeof(DateTime))
+                    {
+                        property.SetValueConverter(new ValueConverter<DateTime, DateTime>(
+                            v => v.ToUniversalTime(),
+                            v => DateTime.SpecifyKind(v, DateTimeKind.Utc)));
+                    }
+                }
+            }
 
             // Configuração específica do Postgre (opcional)
             modelBuilder.HasDefaultSchema("public"); // Define o esquema padrão para o Postgre
