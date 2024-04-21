@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Rent_Motorcycle.Models
 {
+    [Table("TiposPlanos")]
     public class TipoPlano
     {
         [Key]

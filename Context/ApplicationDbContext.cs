@@ -14,7 +14,7 @@ namespace Rent_Motorcycle.Data
         public DbSet<Moto> Motos { get; set; }
         public DbSet<Entregador> Entregadores { get; set; }
         public DbSet<Locacao> Locacoes { get; set; }
-        public DbSet<TipoPlano> TiposPlanos { get; set; }
+        public DbSet<TipoPlano> TipoPlanos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,6 +33,9 @@ namespace Rent_Motorcycle.Data
                     }
                 }
             }
+
+            modelBuilder.Entity<TipoPlano>()
+                .ToTable("TiposPlanos");
 
             // Configuração específica do Postgre (opcional)
             modelBuilder.HasDefaultSchema("public"); // Define o esquema padrão para o Postgre
