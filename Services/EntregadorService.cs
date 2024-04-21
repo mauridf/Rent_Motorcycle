@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 using Minio;
 using Minio.Exceptions;
 using Minio.DataModel.Args;
+using Serilog;
 
 namespace Rent_Motorcycle.Services
 {
+    //MinIO Configuration
     public class MinioConfig
     {
         public string Endpoint { get; set; }
@@ -24,66 +26,92 @@ namespace Rent_Motorcycle.Services
         private readonly MinIOService _minIOService;
         private readonly LocalStorageService _localStorageService;
         private readonly IConfiguration _configuration;
+        private readonly ILogger<EntregadorService> _logger;
 
-        public EntregadorService(ApplicationDbContext context, MinIOService minIOService, LocalStorageService localStorageService, IConfiguration configuration)
+        public EntregadorService(ApplicationDbContext context, MinIOService minIOService, LocalStorageService localStorageService, IConfiguration configuration, ILogger<EntregadorService> logger)
         {
             _context = context;
             _minIOService = minIOService;
             _localStorageService = localStorageService;
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<string> UploadImagem(byte[] imagem, string nomeArquivo = null)
         {
-            string caminhoImagem;
-
-            bool useMinIO = bool.TryParse(_configuration["UseMinIO"], out bool useMinIOValue) && useMinIOValue;
-
-            if (useMinIO)
+            try
             {
-                // Tenta fazer upload da imagem para o MinIO
-                try
+                _logger.LogInformation("Starting the Service UploadImagem of EntregadorService... - {Data}", DateTime.Now);
+                string caminhoImagem;
+
+                bool useMinIO = bool.TryParse(_configuration["UseMinIO"], out bool useMinIOValue) && useMinIOValue;
+
+                if (useMinIO)
                 {
-                    caminhoImagem = await _minIOService.UploadImagem(imagem);
+                    // Tenta fazer upload da imagem para o MinIO
+                    try
+                    {
+                        caminhoImagem = await _minIOService.UploadImagem(imagem);
+                        _logger.LogInformation("The Image was sent using MinIO successfully. - {Data}", DateTime.Now);
+
+                    }
+                    catch (InvalidEndpointException)
+                    {
+                        Log.Error("For some reason it was not possible to upload using MinIO so it will be done using LocalStorage - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                        caminhoImagem = await _localStorageService.UploadImagem(imagem, nomeArquivo);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error("Error when uploading image via MinIO - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                        throw new Exception("Error when uploading image via MinIO: " + ex.Message);
+                    }
                 }
-                catch (InvalidEndpointException)
+                else
                 {
-                    // Se falhar devido a um endpoint inválido, faz upload da imagem para o armazenamento local
+                    _logger.LogInformation("The Image was sent using LocalStorage successfully. - {Data}", DateTime.Now);
                     caminhoImagem = await _localStorageService.UploadImagem(imagem, nomeArquivo);
                 }
-                catch (Exception ex)
-                {
-                    // Se houver outro erro, lança uma exceção
-                    throw new Exception("Erro ao fazer upload da imagem: " + ex.Message);
-                }
-            }
-            else
-            {
-                // Faz upload da imagem para o armazenamento local
-                caminhoImagem = await _localStorageService.UploadImagem(imagem, nomeArquivo);
-            }
 
-            return caminhoImagem;
+                _logger.LogInformation("Finishing the Service UploadImagem of EntregadorService... - {Data}", DateTime.Now);
+                return caminhoImagem;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("An error occurred in ImageUpload - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when Image Upload: " + ex.Message);
+            }
+            
         }
 
         public async Task<bool> CadastrarEntregador(Entregador entregador)
         {
-            // Verifica se o CNPJ já está cadastrado
-            if (await _context.Entregadores.AnyAsync(e => e.CNPJ == entregador.CNPJ))
-                throw new InvalidOperationException("Esse CNPJ já foi cadastrado.");
+            try
+            {
+                _logger.LogInformation("Starting the Service CadastrarEntregador of EntregadorService... - {Data}", DateTime.Now);
+                // Verifica se o CNPJ já está cadastrado
+                if (await _context.Entregadores.AnyAsync(e => e.CNPJ == entregador.CNPJ))
+                    throw new InvalidOperationException("Esse CNPJ já foi cadastrado.");
 
-            // Verifica se a CNH já está cadastrada
-            if (await _context.Entregadores.AnyAsync(e => e.CNH == entregador.CNH))
-                throw new InvalidOperationException("Essa CNH já foi cadastrada.");
+                // Verifica se a CNH já está cadastrada
+                if (await _context.Entregadores.AnyAsync(e => e.CNH == entregador.CNH))
+                    throw new InvalidOperationException("Essa CNH já foi cadastrada.");
 
-            // Salva o entregador no banco de dados
-            _context.Entregadores.Add(entregador);
-            await _context.SaveChangesAsync();
+                // Salva o entregador no banco de dados
+                _context.Entregadores.Add(entregador);
+                await _context.SaveChangesAsync();
 
-            return true; // Retorna true se o cadastro for bem-sucedido
+                _logger.LogInformation("Finishing the CadastrarEntregador of EntregadorService... - {Data}", DateTime.Now);
+                return true; // Retorna true se o cadastro for bem-sucedido
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when registering delivery driver - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when registering delivery driver: " + ex.Message);
+            }
         }
     }
 
+    //MinIO Service
     public class MinIOService
     {
         private readonly IMinioClient _minioClient;

@@ -1,10 +1,27 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Rent_Motorcycle.Data;
 using Rent_Motorcycle.Services;
 using Rent_Motorcycle.Utils;
+using Serilog;
+using System;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar o logger Serilog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.File("log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog(); // Adicionar Serilog como provedor de log
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -30,10 +47,11 @@ builder.Services.AddSwaggerGen(c =>
     c.MapType<IFormFile>(() => new Microsoft.OpenApi.Models.OpenApiSchema { Type = "file", Format = "binary" });
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Add endpoints for API explorer
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add scoped services
 builder.Services.AddScoped<MotoService>();
 builder.Services.AddScoped<MinIOService>();
 builder.Services.AddScoped<LocalStorageService>();

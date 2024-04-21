@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Rent_Motorcycle.Models;
 using Rent_Motorcycle.Services;
 using Rent_Motorcycle.Utils;
+using Serilog;
 using System;
 using System.IO;
 using System.Net.Http.Headers;
@@ -15,48 +16,54 @@ namespace Rent_Motorcycle.Controllers
     public class EntregadorController : ControllerBase
     {
         private readonly EntregadorService _entregadorService;
+        private readonly ILogger<EntregadorController> _logger;
 
-        public EntregadorController(EntregadorService entregadorService)
+        public EntregadorController(EntregadorService entregadorService, ILogger<EntregadorController> logger)
         {
             _entregadorService = entregadorService;
+            _logger = logger;
         }
 
         /// <summary>
-        /// Endpoint para cadastrar um entregador.
+        /// Endpoint to register a delivery person.
         /// </summary>
-        /// <param name="entregador">Dados do entregador a ser cadastrado.</param>
-        /// <returns>ActionResult com o resultado do cadastro.</returns>
-        [HttpPost("cadastrar-entregador")]
+        /// <param name="entregador">Delivery person details to be registered.</param>
+        /// <returns>ActionResult with the registration result.</returns>
+        [HttpPost("register-delivery")]
         public async Task<IActionResult> CadastrarEntregador([FromBody] Entregador entregador)
         {
             try
             {
+                _logger.LogInformation("Starting the Controller CadastrarEntregador of EntregadorController... - {Data}", DateTime.Now);
                 await _entregadorService.CadastrarEntregador(entregador);
+                _logger.LogInformation("Finishing the Controller CadastrarEntregador of EntregadorController... - {Data}", DateTime.Now);
                 return Ok("Entregador cadastrado com sucesso.");
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao cadastrar entregador: {ex.Message}");
+                Log.Error("An error when registering delivery driver - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                return StatusCode(500, $"Error when registering delivery driver: {ex.Message}");
             }
         }
 
         /// <summary>
-        /// Endpoint para upload de imagem.
+        /// Endpoint for image upload.
         /// </summary>
-        /// <param name="imagem">Imagem a ser enviada.</param>
-        /// <returns>URL da imagem após o upload.</returns>
-        [HttpPost("upload-imagem")]
+        /// <param name="imagem">Image to be sent.</param>
+        /// <returns>Image URL after upload.</returns>
+        [HttpPost("upload-image")]
         [FileUpload]
         [Consumes("multipart/form-data")]
         public async Task<IActionResult> UploadImagem([FromForm] IFormFile imagem)
         {
             if (imagem == null || imagem.Length == 0)
             {
-                return BadRequest("Nenhuma imagem foi enviada.");
+                return BadRequest("No images were sent.");
             }
 
             try
             {
+                _logger.LogInformation("Starting the Controller UploadImagem of EntregadorController... - {Data}", DateTime.Now);
                 byte[] imagemBytes;
                 string nomeArquivo;
 
@@ -66,25 +73,31 @@ namespace Rent_Motorcycle.Controllers
                     imagemBytes = memoryStream.ToArray();
                 }
 
-                // Verifica se o tipo de arquivo é suportado (PNG ou BMP)
-                if (imagem.ContentType != "image/png" && imagem.ContentType != "image/bmp")
-                {
-                    return BadRequest("Somente arquivos PNG ou BMP são suportados.");
-                }
-
                 // Tenta obter o nome do arquivo a partir do Content-Disposition
                 var contentDisposition = ContentDispositionHeaderValue.Parse(imagem.ContentDisposition);
-                nomeArquivo = contentDisposition.FileName.ToString().Trim('"');
+                var nomeArquivoOriginal = contentDisposition.FileName.ToString().Trim('"');
 
-                nomeArquivo = $"{Guid.NewGuid()}.png"; //Alterar o Nome do Arquivo para ficar padronizado
+                // Obtém a extensão do arquivo original
+                var extensaoOriginal = Path.GetExtension(nomeArquivoOriginal)?.ToLower();
+
+                // Verifica se a extensão é suportada (PNG ou BMP)
+                if (extensaoOriginal != ".png" && extensaoOriginal != ".bmp")
+                {
+                    return BadRequest("Only PNG or BMP files are supported.");
+                }
+
+                // Gera um novo nome de arquivo com a extensão corrigida
+                nomeArquivo = $"{Guid.NewGuid()}{extensaoOriginal}";
 
                 // Faz o upload da imagem
                 var imagemUrl = await _entregadorService.UploadImagem(imagemBytes, nomeArquivo);
+                _logger.LogInformation("Finishing the Controller UploadImagem of EntregadorController... - {Data}", DateTime.Now);
                 return Ok(new { ImagemUrl = imagemUrl });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, $"Erro ao fazer o upload da imagem: {ex.Message}");
+                Log.Error("Error uploading image - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                return StatusCode(500, $"Error uploading image: {ex.Message}");
             }
         }
     }
