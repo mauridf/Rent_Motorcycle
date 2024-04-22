@@ -57,7 +57,7 @@ namespace Rent_Motorcycle.Services
                     }
                     catch (InvalidEndpointException)
                     {
-                        Log.Error("For some reason it was not possible to upload using MinIO so it will be done using LocalStorage - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                        Log.Error("For some reason it was not possible to upload using MinIO so it will be done using LocalStorage - {MinhaMsgErro}. Data: {MinhaData}", DateTime.Now);
                         caminhoImagem = await _localStorageService.UploadImagem(imagem, nomeArquivo);
                     }
                     catch (Exception ex)
@@ -115,48 +115,65 @@ namespace Rent_Motorcycle.Services
     public class MinIOService
     {
         private readonly IMinioClient _minioClient;
+        private readonly ILogger<EntregadorService> _logger;
 
         public MinIOService(MinioConfig minioConfig)
         {
             try
             {
+                _logger.LogInformation("Configuring MinIO settings. - {Data}", DateTime.Now);
                 _minioClient = new MinioClient()
                     .WithEndpoint(minioConfig.Endpoint)
                     .WithCredentials(minioConfig.AccessKey, minioConfig.SecretKey)
                     .Build();
                 _minioClient.SetAppInfo(null, "1.2.2");
+                _logger.LogInformation("MinIO Settings Set. - {Data}", DateTime.Now);
             }
             catch (InvalidEndpointException)
             {
-                // Se ocorrer um erro de endpoint inválido, apenas registre o erro
-                Console.WriteLine("Endpoint inválido, fazendo upload para o armazenamento local...");
+                //Ocorrendo um erro de endpoint inválido, o erro será registrado
+                Log.Error("Invalid endpoint, uploading to local storage... - {MinhaMsgErro}. Data: {MinhaData}", DateTime.Now);
+                Console.WriteLine("Invalid endpoint, uploading to local storage...");
             }
         }
 
         public async Task<string> UploadImagem(byte[] imagem)
         {
-            string bucketName = "rent-motocycle"; // Nome do bucket criado no MinIO
-            string objectName = Guid.NewGuid().ToString(); // Gerar um nome aleatório para o objeto
-
-            using (var stream = new MemoryStream(imagem))
+            try
             {
-                var args = new PutObjectArgs()
-                    .WithBucket(bucketName)
-                    .WithObject(objectName)
-                    .WithStreamData(stream)
-                    .WithContentType("application/octet-stream");
+                _logger.LogInformation("Starting Upload via MinIO. - {Data}", DateTime.Now);
+                string bucketName = "rent-motocycle"; //Nome do bucket criado no MinIO
+                string objectName = Guid.NewGuid().ToString(); //Gerar um nome aleatório para o objeto
+                _logger.LogInformation("The object {Object} will be generated in the bucket {Bucket}. - {Data}", objectName,bucketName, DateTime.Now);
 
-                await _minioClient.PutObjectAsync(args);
+                using (var stream = new MemoryStream(imagem))
+                {
+                    var args = new PutObjectArgs()
+                        .WithBucket(bucketName)
+                        .WithObject(objectName)
+                        .WithStreamData(stream)
+                        .WithContentType("application/octet-stream");
+
+                    await _minioClient.PutObjectAsync(args);
+                }
+
+                var url = $"{bucketName}/{objectName}";
+                _logger.LogInformation("URL with generated object {url}. - {Data}", url, DateTime.Now);
+                // Retornar a URL da imagem no MinIO
+                return url;
             }
-
-            // Retornar a URL da imagem no MinIO
-            return $"{bucketName}/{objectName}";
+            catch (Exception ex)
+            {
+                Log.Error("Error when Upload Image with MinIO. - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when Upload Image with MinIO: " + ex.Message);
+            }
         }
     }
 
     public class LocalStorageService
     {
         private readonly string _storagePath;
+        private readonly ILogger<EntregadorService> _logger;
 
         public LocalStorageService(IConfiguration configuration)
         {
@@ -165,22 +182,32 @@ namespace Rent_Motorcycle.Services
 
         public async Task<string> UploadImagem(byte[] imagem, string nomeArquivo = null)
         {
-            //string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _storagePath);
-            string directoryPath = _storagePath;
-
-            if (!Directory.Exists(directoryPath))
+            try
             {
-                Directory.CreateDirectory(directoryPath);
+                _logger.LogInformation("Starting Upload via Local Storage in {Path}. - {Data}", _storagePath, DateTime.Now);
+                //string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _storagePath);
+                string directoryPath = _storagePath;
+
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                }
+
+                // Concatena o nome do arquivo com o diretório para obter o caminho completo
+                string filePath = Path.Combine(directoryPath, nomeArquivo);
+
+                // Salva a imagem no armazenamento local
+                await File.WriteAllBytesAsync(filePath, imagem);
+
+                _logger.LogInformation("Image saved to path {Path}. - {Data}", filePath,DateTime.Now);
+                // Retorna o caminho completo da imagem no armazenamento local
+                return $"{filePath}";
             }
-
-            // Concatena o nome do arquivo com o diretório para obter o caminho completo
-            string filePath = Path.Combine(directoryPath, nomeArquivo);
-
-            // Salva a imagem no armazenamento local
-            await File.WriteAllBytesAsync(filePath, imagem);
-
-            // Retorna o caminho completo da imagem no armazenamento local
-            return $"{filePath}";
+            catch (Exception ex)
+            {
+                Log.Error("Error when Upload Image with MinIO. - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when Upload Image with Local Storage: " + ex.Message);
+            }
         }
     }
 }
