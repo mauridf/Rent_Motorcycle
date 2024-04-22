@@ -9,6 +9,7 @@ using Minio;
 using Minio.Exceptions;
 using Minio.DataModel.Args;
 using Serilog;
+using System.Text.Json;
 
 namespace Rent_Motorcycle.Services
 {
@@ -27,14 +28,16 @@ namespace Rent_Motorcycle.Services
         private readonly LocalStorageService _localStorageService;
         private readonly IConfiguration _configuration;
         private readonly ILogger<EntregadorService> _logger;
+        private readonly RabbitMQSenderService _rabbitMQSender;
 
-        public EntregadorService(ApplicationDbContext context, MinIOService minIOService, LocalStorageService localStorageService, IConfiguration configuration, ILogger<EntregadorService> logger)
+        public EntregadorService(ApplicationDbContext context, MinIOService minIOService, LocalStorageService localStorageService, IConfiguration configuration, ILogger<EntregadorService> logger, RabbitMQSenderService rabbitMQSender)
         {
             _context = context;
             _minIOService = minIOService;
             _localStorageService = localStorageService;
             _configuration = configuration;
             _logger = logger;
+            _rabbitMQSender = rabbitMQSender;
         }
 
         public async Task<string> UploadImagem(byte[] imagem, string nomeArquivo = null)
@@ -99,6 +102,27 @@ namespace Rent_Motorcycle.Services
                 // Salva o entregador no banco de dados
                 _context.Entregadores.Add(entregador);
                 await _context.SaveChangesAsync();
+
+                // Publica uma mensagem informando sobre um novo entregador cadastrado
+                _logger.LogInformation("Publishing the addition of a new delivery person - RabittMQ - {Data}", DateTime.Now);
+                try
+                {
+                    if (_rabbitMQSender != null && _rabbitMQSender.IsConnected)
+                    {
+                        var message = JsonSerializer.Serialize(entregador);
+                        await _rabbitMQSender.SendMessageAsync("new-delivery-person", message);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("RabbitMQ connection is not available. The message was not sent.");
+                        // Aqui você pode lidar com a situação de conexão não disponível, como lançar uma exceção ou tomar alguma ação alternativa
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning($"Failed to send message to RabbitMQ: {ex.Message}");
+                    // Lidar com o erro, como registrar no log ou lançar uma exceção
+                }
 
                 _logger.LogInformation("Finishing the CadastrarEntregador of EntregadorService... - {Data}", DateTime.Now);
                 return true; // Retorna true se o cadastro for bem-sucedido

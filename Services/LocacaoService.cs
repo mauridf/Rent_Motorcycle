@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Rent_Motorcycle.Controllers;
 using Rent_Motorcycle.Data;
 using Rent_Motorcycle.Models;
+using Rent_Motorcycle.Services.RabbitMQ;
 using Serilog;
 
 namespace Rent_Motorcycle.Services
@@ -12,11 +15,13 @@ namespace Rent_Motorcycle.Services
     {
         private readonly ApplicationDbContext _context;
         private readonly ILogger<LocacaoService> _logger;
+        private readonly RabbitMQSenderService _rabbitMQSender;
 
-        public LocacaoService(ApplicationDbContext context, ILogger<LocacaoService> logger)
+        public LocacaoService(ApplicationDbContext context, ILogger<LocacaoService> logger, RabbitMQSenderService rabbitMQConnection)
         {
             _context = context;
             _logger = logger;
+            _rabbitMQSender = rabbitMQConnection;
         }
 
         public decimal CalcularValorTotalLocacao(DateTime dataInicio, int tipoPlanoId, DateTime dataTermino)
@@ -110,8 +115,30 @@ namespace Rent_Motorcycle.Services
                 // Salva a locação no banco de dados
                 _context.Locacoes.Add(locacao);
                 await _context.SaveChangesAsync();
+
+                // Publica uma mensagem informando sobre a nova locação
+                _logger.LogInformation("Publishing new rental message - RabbitMQ - {Data}", DateTime.Now);
+                try
+                {
+                    if (_rabbitMQSender != null && _rabbitMQSender.IsConnected)
+                    {
+                        var message = JsonSerializer.Serialize(locacao);
+                        await _rabbitMQSender.SendMessageAsync("new-rental", message);
+                    }
+                    else
+                    {
+                        _logger.LogWarning("RabbitMQ connection is not available. The message was not sent.");
+                        // Aqui você pode lidar com a situação de conexão não disponível, como lançar uma exceção ou tomar alguma ação alternativa
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning($"Failed to send message to RabbitMQ: {ex.Message}");
+                    // Lidar com o erro, como registrar no log ou lançar uma exceção
+                }
+
                 _logger.LogInformation("Finishing the Service EfetuarLocacao of LocacaoService - {Data}", DateTime.Now);
-                return (null, valorTotal); // Retorna null para a mensagem de erro e o valor total calculado
+                return (null, valorTotal);
             }
             catch (Exception ex)
             {
