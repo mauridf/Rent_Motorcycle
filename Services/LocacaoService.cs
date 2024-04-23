@@ -146,5 +146,47 @@ namespace Rent_Motorcycle.Services
                 throw new Exception("Error when making a Rental: " + ex.Message);
             }
         }
+
+        public async Task<List<Locacao>> ConsultarLocacoes(DateTime? dataInicio,DateTime? dataPrevistaTermino,string? tipoPlanoNome,string? motoModelo, string? placaMoto, int? entregadorId,decimal? valorMinimo,decimal? valorMaximo)
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Service ConsultarLocacoes of LocacaoService... - {Data}", DateTime.Now);
+
+                var query = _context.Locacoes
+                    .Include(l => l.TipoPlano)
+                    .Include(l => l.Moto)
+                    .Include(l => l.Entregador)
+                    .AsQueryable();
+
+                //Filtros de pesquisa
+                if (dataInicio != null)
+                    query = query.Where(l => l.DataInicio >= dataInicio);
+                if (dataPrevistaTermino != null)
+                    query = query.Where(l => l.DataPrevistaTermino <= dataPrevistaTermino);
+                if (!string.IsNullOrEmpty(tipoPlanoNome))
+                    query = query.Where(l => l.TipoPlano.Nome.Contains(tipoPlanoNome));
+                if (!string.IsNullOrEmpty(motoModelo))
+                    query = query.Where(l => l.Moto.Modelo.Contains(motoModelo));
+                if (!string.IsNullOrEmpty(placaMoto))
+                    query = query.Where(l => l.Moto.Placa.Contains(placaMoto));
+                if (entregadorId != null)
+                    query = query.Where(l => l.EntregadorId == entregadorId);
+                if (valorMinimo != null)
+                    query = query.Where(l => l.ValorLocacao >= valorMinimo);
+                if (valorMaximo != null)
+                    query = query.Where(l => l.ValorLocacao <= valorMaximo);
+
+                var locacoes = await query.ToListAsync();
+
+                _logger.LogInformation("Finishing the Service ConsultarLocacoes of LocacaoService... - {Data}", DateTime.Now);
+                return locacoes;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("An error occurred when querying rentals - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when querying rentals: " + ex.Message);
+            }
+        }
     }
 }

@@ -64,5 +64,81 @@ namespace Rent_Motorcycle.Services
                 throw new Exception("Error when registering license plate: " + ex.Message);
             }
         }
+
+        public async Task<List<Moto>> ConsultarMotos(string placa)
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Service ConsultarMotos of MotoService... - {Data}", DateTime.Now);
+                IQueryable<Moto> query = _context.Motos;
+
+                if (!string.IsNullOrEmpty(placa))
+                {
+                    query = query.Where(m => m.Placa == placa);
+                }
+
+                var motos = await query.ToListAsync();
+                _logger.LogInformation("Finishing the Service ConsultarMotos of MotoService... - {Data}", DateTime.Now);
+                return motos;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when querying motorcycles - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when querying motorcycles: " + ex.Message);
+            }
+        }
+
+        public async Task<bool> ModificarMoto(int id, string novaPlaca)
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Service ModificarMoto of MotoService... - {Data}", DateTime.Now);
+                var moto = await _context.Motos.FindAsync(id);
+                if (moto == null)
+                    throw new KeyNotFoundException($"Motorcycle with ID {id} not found.");
+
+                var motoExistsWithNewPlaca = await _context.Motos.AnyAsync(m => m.Placa == novaPlaca);
+                if (motoExistsWithNewPlaca)
+                    throw new InvalidOperationException("A motorcycle with the new license plate already exists.");
+
+                moto.Placa = novaPlaca;
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Finishing the Service ModificarMoto of MotoService... - {Data}", DateTime.Now);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when modifying motorcycle - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when modifying motorcycle: " + ex.Message);
+            }
+        }
+
+        public async Task<bool> RemoverMoto(int id)
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Service RemoverMoto of MotoService... - {Data}", DateTime.Now);
+                var moto = await _context.Motos.FindAsync(id);
+                if (moto == null)
+                    throw new KeyNotFoundException($"Motorcycle with ID {id} not found.");
+
+                // Verifica se há locações associadas à moto
+                var hasRentals = await _context.Locacoes.AnyAsync(l => l.MotoId == id);
+                if (hasRentals)
+                    throw new InvalidOperationException("This motorcycle cannot be removed because it has associated rentals.");
+
+                _context.Motos.Remove(moto);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation("Finishing the Service RemoverMoto of MotoService... - {Data}", DateTime.Now);
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when removing motorcycle - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when removing motorcycle: " + ex.Message);
+            }
+        }
     }
 }

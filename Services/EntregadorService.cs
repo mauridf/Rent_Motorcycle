@@ -133,25 +133,55 @@ namespace Rent_Motorcycle.Services
                 throw new Exception("Error when registering delivery driver: " + ex.Message);
             }
         }
+
+        public async Task<List<Entregador>> ConsultarEntregadores(DateTime? dataNascimento, string? nome, string? cnpj, string? cnh, string? tipoCNH)
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Service ConsultarEntregadores of EntregadorService... - {Data}", DateTime.Now);
+
+                var query = _context.Entregadores
+                    .AsQueryable();
+
+                //Filtros de pesquisa
+                if (dataNascimento != null)
+                    query = query.Where(e => e.DataNascimento >= dataNascimento);
+                if (!string.IsNullOrEmpty(nome))
+                    query = query.Where(e => e.Nome.Contains(nome));
+                if (!string.IsNullOrEmpty(cnpj))
+                    query = query.Where(e => e.CNPJ == cnpj);
+                if (!string.IsNullOrEmpty(cnh))
+                    query = query.Where(e => e.CNH == cnh);
+                if (tipoCNH != null)
+                    query = query.Where(e => e.TipoCNH == tipoCNH);
+
+                var entregadores = await query.ToListAsync();
+
+                _logger.LogInformation("Finishing the Service ConsultarEntregadores of EntregadorService... - {Data}", DateTime.Now);
+                return entregadores;
+            }
+            catch (Exception ex)
+            {
+                Log.Error("An error occurred when querying delivery driver - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                throw new Exception("Error when querying delivery driver: " + ex.Message);
+            }
+        }
     }
 
     //MinIO Service
     public class MinIOService
     {
         private readonly IMinioClient _minioClient;
-        private readonly ILogger<EntregadorService> _logger;
 
         public MinIOService(MinioConfig minioConfig)
         {
             try
             {
-                _logger.LogInformation("Configuring MinIO settings. - {Data}", DateTime.Now);
-                _minioClient = new MinioClient()
+               _minioClient = new MinioClient()
                     .WithEndpoint(minioConfig.Endpoint)
                     .WithCredentials(minioConfig.AccessKey, minioConfig.SecretKey)
                     .Build();
                 _minioClient.SetAppInfo(null, "1.2.2");
-                _logger.LogInformation("MinIO Settings Set. - {Data}", DateTime.Now);
             }
             catch (InvalidEndpointException)
             {
@@ -165,11 +195,9 @@ namespace Rent_Motorcycle.Services
         {
             try
             {
-                _logger.LogInformation("Starting Upload via MinIO. - {Data}", DateTime.Now);
                 string bucketName = "rent-motocycle"; //Nome do bucket criado no MinIO
                 string objectName = Guid.NewGuid().ToString(); //Gerar um nome aleatório para o objeto
-                _logger.LogInformation("The object {Object} will be generated in the bucket {Bucket}. - {Data}", objectName,bucketName, DateTime.Now);
-
+                
                 using (var stream = new MemoryStream(imagem))
                 {
                     var args = new PutObjectArgs()
@@ -182,7 +210,6 @@ namespace Rent_Motorcycle.Services
                 }
 
                 var url = $"{bucketName}/{objectName}";
-                _logger.LogInformation("URL with generated object {url}. - {Data}", url, DateTime.Now);
                 // Retornar a URL da imagem no MinIO
                 return url;
             }
@@ -197,7 +224,6 @@ namespace Rent_Motorcycle.Services
     public class LocalStorageService
     {
         private readonly string _storagePath;
-        private readonly ILogger<EntregadorService> _logger;
 
         public LocalStorageService(IConfiguration configuration)
         {
@@ -208,7 +234,6 @@ namespace Rent_Motorcycle.Services
         {
             try
             {
-                _logger.LogInformation("Starting Upload via Local Storage in {Path}. - {Data}", _storagePath, DateTime.Now);
                 //string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _storagePath);
                 string directoryPath = _storagePath;
 
@@ -223,7 +248,6 @@ namespace Rent_Motorcycle.Services
                 // Salva a imagem no armazenamento local
                 await File.WriteAllBytesAsync(filePath, imagem);
 
-                _logger.LogInformation("Image saved to path {Path}. - {Data}", filePath,DateTime.Now);
                 // Retorna o caminho completo da imagem no armazenamento local
                 return $"{filePath}";
             }

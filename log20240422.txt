@@ -254,3 +254,360 @@ RETURNING "Id";
 2024-04-22 19:33:34.632 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.LocacaoController.EfetuarLocacao (Rent_Motorcycle) in 32556.4562ms
 2024-04-22 19:33:34.635 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.LocacaoController.EfetuarLocacao (Rent_Motorcycle)'
 2024-04-22 19:33:34.652 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7048/api/Locacao/make-rental application/json 119 - 200 - application/json;+charset=utf-8 32651.0978ms
+2024-04-22 20:14:04.421 -03:00 [INF] Now listening on: https://localhost:7048
+2024-04-22 20:14:04.517 -03:00 [INF] Now listening on: http://localhost:5049
+2024-04-22 20:14:04.527 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-04-22 20:14:04.530 -03:00 [INF] Hosting environment: Development
+2024-04-22 20:14:04.532 -03:00 [INF] Content root path: C:\Projetos\.NET\Rent_Motorcycle
+2024-04-22 20:14:05.592 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/index.html - -
+2024-04-22 20:14:06.972 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/index.html - - - 200 - text/html;charset=utf-8 1387.0424ms
+2024-04-22 20:14:07.069 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - -
+2024-04-22 20:14:07.072 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_vs/browserLink - -
+2024-04-22 20:14:07.116 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - - - 200 12362 application/javascript;+charset=utf-8 39.2861ms
+2024-04-22 20:14:07.176 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 103.8949ms
+2024-04-22 20:14:07.380 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - -
+2024-04-22 20:14:07.800 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 420.2577ms
+2024-04-22 20:14:45.293 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Moto/search-motos?placa=JGD5085 - -
+2024-04-22 20:14:45.334 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.MotoController.ConsultarMotos (Rent_Motorcycle)'
+2024-04-22 20:14:45.406 -03:00 [INF] Route matched with {action = "ConsultarMotos", controller = "Moto"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConsultarMotos(System.String) on controller Rent_Motorcycle.Controllers.MotoController (Rent_Motorcycle).
+2024-04-22 20:14:46.006 -03:00 [INF] Starting the Controller ConsultarMotos of MotoController... - "2024-04-22T20:14:46.0055135-03:00"
+2024-04-22 20:14:46.055 -03:00 [INF] Starting the Service ConsultarMotos of MotoService... - "2024-04-22T20:14:46.0553755-03:00"
+2024-04-22 20:14:50.046 -03:00 [INF] Executed DbCommand (77ms) [Parameters=[@__placa_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Ano", m."Modelo", m."Placa"
+FROM public."Motos" AS m
+WHERE m."Placa" = @__placa_0
+2024-04-22 20:14:50.144 -03:00 [INF] Finishing the Service ConsultarMotos of MotoService... - "2024-04-22T20:14:50.1439853-03:00"
+2024-04-22 20:14:50.147 -03:00 [INF] Finishing the Controller ConsultarMotos of MotoController... - "2024-04-22T20:14:50.1473106-03:00"
+2024-04-22 20:14:50.164 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Moto, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 20:14:50.192 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.MotoController.ConsultarMotos (Rent_Motorcycle) in 4775.4291ms
+2024-04-22 20:14:50.198 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.MotoController.ConsultarMotos (Rent_Motorcycle)'
+2024-04-22 20:14:50.216 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Moto/search-motos?placa=JGD5085 - - - 200 - application/json;+charset=utf-8 4922.8990ms
+2024-04-22 20:15:02.718 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Moto/all-motos - -
+2024-04-22 20:15:02.727 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.MotoController.ConsultarTodasAsMotos (Rent_Motorcycle)'
+2024-04-22 20:15:02.738 -03:00 [INF] Route matched with {action = "ConsultarTodasAsMotos", controller = "Moto"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ConsultarTodasAsMotos() on controller Rent_Motorcycle.Controllers.MotoController (Rent_Motorcycle).
+2024-04-22 20:15:02.748 -03:00 [INF] Starting the Controller ConsultarTodasAsMotos of MotoController... - "2024-04-22T20:15:02.7480415-03:00"
+2024-04-22 20:15:02.750 -03:00 [INF] Starting the Service ConsultarMotos of MotoService... - "2024-04-22T20:15:02.7500606-03:00"
+2024-04-22 20:15:02.805 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Ano", m."Modelo", m."Placa"
+FROM public."Motos" AS m
+2024-04-22 20:15:02.813 -03:00 [INF] Finishing the Service ConsultarMotos of MotoService... - "2024-04-22T20:15:02.8133251-03:00"
+2024-04-22 20:15:02.814 -03:00 [INF] Finishing the Controller ConsultarTodasAsMotos of MotoController... - "2024-04-22T20:15:02.8148723-03:00"
+2024-04-22 20:15:02.816 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Moto, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 20:15:02.819 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.MotoController.ConsultarTodasAsMotos (Rent_Motorcycle) in 74.6815ms
+2024-04-22 20:15:02.823 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.MotoController.ConsultarTodasAsMotos (Rent_Motorcycle)'
+2024-04-22 20:15:02.827 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Moto/all-motos - - - 200 - application/json;+charset=utf-8 110.3231ms
+2024-04-22 20:48:15.334 -03:00 [INF] Now listening on: https://localhost:7048
+2024-04-22 20:48:15.443 -03:00 [INF] Now listening on: http://localhost:5049
+2024-04-22 20:48:15.452 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-04-22 20:48:15.454 -03:00 [INF] Hosting environment: Development
+2024-04-22 20:48:15.456 -03:00 [INF] Content root path: C:\Projetos\.NET\Rent_Motorcycle
+2024-04-22 20:48:16.250 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/index.html - -
+2024-04-22 20:48:17.209 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/index.html - - - 200 - text/html;charset=utf-8 962.9147ms
+2024-04-22 20:48:17.229 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - -
+2024-04-22 20:48:17.249 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - - - 200 12362 application/javascript;+charset=utf-8 19.6481ms
+2024-04-22 20:48:17.289 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_vs/browserLink - -
+2024-04-22 20:48:17.344 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 54.8540ms
+2024-04-22 20:48:17.540 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - -
+2024-04-22 20:48:17.781 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 240.6547ms
+2024-04-22 20:48:28.832 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Locacao/all-rentals - -
+2024-04-22 20:48:28.848 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.LocacaoController.GetLocacoes (Rent_Motorcycle)'
+2024-04-22 20:48:28.881 -03:00 [INF] Route matched with {action = "GetLocacoes", controller = "Locacao"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetLocacoes() on controller Rent_Motorcycle.Controllers.LocacaoController (Rent_Motorcycle).
+2024-04-22 20:48:29.836 -03:00 [INF] Starting the Controller GetLocacoes of LocacaoController... - "2024-04-22T20:48:29.8354896-03:00"
+2024-04-22 20:48:29.903 -03:00 [INF] Starting the Service ConsultarLocacoes of LocacaoService... - "2024-04-22T20:48:29.9032671-03:00"
+2024-04-22 20:48:31.605 -03:00 [INF] Executed DbCommand (71ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT l."Id", l."DataInicio", l."DataPrevistaTermino", l."DataTermino", l."EntregadorId", l."MotoId", l."TipoPlanoId", l."ValorLocacao", t."Id", t."Custo", t."Dias", t."Nome", m."Id", m."Ano", m."Modelo", m."Placa", e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Locacoes" AS l
+INNER JOIN public."TiposPlanos" AS t ON l."TipoPlanoId" = t."Id"
+INNER JOIN public."Motos" AS m ON l."MotoId" = m."Id"
+INNER JOIN public."Entregadores" AS e ON l."EntregadorId" = e."Id"
+2024-04-22 20:48:31.754 -03:00 [INF] Finishing the Service ConsultarLocacoes of LocacaoService... - "2024-04-22T20:48:31.7549309-03:00"
+2024-04-22 20:48:31.756 -03:00 [INF] Finishing the Controller GetLocacoes of LocacaoController... - "2024-04-22T20:48:31.7563066-03:00"
+2024-04-22 20:48:31.771 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Locacao, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 20:48:31.821 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.LocacaoController.GetLocacoes (Rent_Motorcycle) in 2934.8869ms
+2024-04-22 20:48:31.823 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.LocacaoController.GetLocacoes (Rent_Motorcycle)'
+2024-04-22 20:48:31.837 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Locacao/all-rentals - - - 200 - application/json;+charset=utf-8 3004.5897ms
+2024-04-22 20:49:49.687 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Locacao/search-rental?motoPlaca=JGC8807 - -
+2024-04-22 20:49:49.710 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle)'
+2024-04-22 20:49:49.738 -03:00 [INF] Route matched with {action = "PesquisarLocacoes", controller = "Locacao"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarLocacoes(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller Rent_Motorcycle.Controllers.LocacaoController (Rent_Motorcycle).
+2024-04-22 20:49:49.886 -03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2024-04-22 20:49:49.906 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle) in 165.244ms
+2024-04-22 20:49:49.908 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle)'
+2024-04-22 20:49:49.909 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Locacao/search-rental?motoPlaca=JGC8807 - - - 400 - application/problem+json;+charset=utf-8 222.3919ms
+2024-04-22 20:52:42.360 -03:00 [INF] Now listening on: https://localhost:7048
+2024-04-22 20:52:42.407 -03:00 [INF] Now listening on: http://localhost:5049
+2024-04-22 20:52:42.413 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-04-22 20:52:42.415 -03:00 [INF] Hosting environment: Development
+2024-04-22 20:52:42.416 -03:00 [INF] Content root path: C:\Projetos\.NET\Rent_Motorcycle
+2024-04-22 20:52:43.021 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/index.html - -
+2024-04-22 20:52:43.552 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/index.html - - - 200 - text/html;charset=utf-8 533.4877ms
+2024-04-22 20:52:43.567 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - -
+2024-04-22 20:52:43.588 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - - - 200 12362 application/javascript;+charset=utf-8 20.8916ms
+2024-04-22 20:52:43.617 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_vs/browserLink - -
+2024-04-22 20:52:43.658 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 41.4099ms
+2024-04-22 20:52:43.800 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - -
+2024-04-22 20:52:44.024 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 224.4442ms
+2024-04-22 20:53:21.932 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Locacao/search-rental?motoPlaca=JFB8079 - -
+2024-04-22 20:53:21.946 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle)'
+2024-04-22 20:53:21.980 -03:00 [INF] Route matched with {action = "PesquisarLocacoes", controller = "Locacao"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarLocacoes(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller Rent_Motorcycle.Controllers.LocacaoController (Rent_Motorcycle).
+2024-04-22 20:53:22.413 -03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2024-04-22 20:53:22.435 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle) in 450.5318ms
+2024-04-22 20:53:22.440 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle)'
+2024-04-22 20:53:22.445 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Locacao/search-rental?motoPlaca=JFB8079 - - - 400 - application/problem+json;+charset=utf-8 512.5556ms
+2024-04-22 20:54:24.623 -03:00 [INF] Now listening on: https://localhost:7048
+2024-04-22 20:54:24.676 -03:00 [INF] Now listening on: http://localhost:5049
+2024-04-22 20:54:24.681 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-04-22 20:54:24.684 -03:00 [INF] Hosting environment: Development
+2024-04-22 20:54:24.685 -03:00 [INF] Content root path: C:\Projetos\.NET\Rent_Motorcycle
+2024-04-22 20:54:25.480 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/index.html - -
+2024-04-22 20:54:25.905 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/index.html - - - 200 - text/html;charset=utf-8 427.9695ms
+2024-04-22 20:54:25.911 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - -
+2024-04-22 20:54:25.924 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - - - 200 12362 application/javascript;+charset=utf-8 12.4957ms
+2024-04-22 20:54:25.958 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_vs/browserLink - -
+2024-04-22 20:54:25.991 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 32.7142ms
+2024-04-22 20:54:26.129 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - -
+2024-04-22 20:54:26.337 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 208.1954ms
+2024-04-22 20:54:47.053 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Locacao/search-rental?motoPlaca=JFB8079 - -
+2024-04-22 20:54:47.073 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle)'
+2024-04-22 20:54:47.149 -03:00 [INF] Route matched with {action = "PesquisarLocacoes", controller = "Locacao"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarLocacoes(System.Nullable`1[System.DateTime], System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.Nullable`1[System.Int32], System.Nullable`1[System.Decimal], System.Nullable`1[System.Decimal]) on controller Rent_Motorcycle.Controllers.LocacaoController (Rent_Motorcycle).
+2024-04-22 20:54:47.485 -03:00 [INF] Starting the Controller PesquisarLocacoes of LocacaoController... - "2024-04-22T20:54:47.4847539-03:00"
+2024-04-22 20:54:47.519 -03:00 [INF] Starting the Service ConsultarLocacoes of LocacaoService... - "2024-04-22T20:54:47.5193229-03:00"
+2024-04-22 20:54:49.447 -03:00 [INF] Executed DbCommand (76ms) [Parameters=[@__placaMoto_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT l."Id", l."DataInicio", l."DataPrevistaTermino", l."DataTermino", l."EntregadorId", l."MotoId", l."TipoPlanoId", l."ValorLocacao", t."Id", t."Custo", t."Dias", t."Nome", m."Id", m."Ano", m."Modelo", m."Placa", e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Locacoes" AS l
+INNER JOIN public."Motos" AS m ON l."MotoId" = m."Id"
+INNER JOIN public."TiposPlanos" AS t ON l."TipoPlanoId" = t."Id"
+INNER JOIN public."Entregadores" AS e ON l."EntregadorId" = e."Id"
+WHERE @__placaMoto_0 = '' OR strpos(m."Placa", @__placaMoto_0) > 0
+2024-04-22 20:54:49.595 -03:00 [INF] Finishing the Service ConsultarLocacoes of LocacaoService... - "2024-04-22T20:54:49.5953998-03:00"
+2024-04-22 20:54:49.597 -03:00 [INF] Finishing the Controller PesquisarLocacoes of LocacaoController... - "2024-04-22T20:54:49.5971986-03:00"
+2024-04-22 20:54:49.605 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Locacao, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 20:54:49.647 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle) in 2489.7423ms
+2024-04-22 20:54:49.651 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.LocacaoController.PesquisarLocacoes (Rent_Motorcycle)'
+2024-04-22 20:54:49.662 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Locacao/search-rental?motoPlaca=JFB8079 - - - 200 - application/json;+charset=utf-8 2609.3213ms
+2024-04-22 21:14:42.284 -03:00 [INF] Now listening on: https://localhost:7048
+2024-04-22 21:14:42.363 -03:00 [INF] Now listening on: http://localhost:5049
+2024-04-22 21:14:42.375 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-04-22 21:14:42.378 -03:00 [INF] Hosting environment: Development
+2024-04-22 21:14:42.380 -03:00 [INF] Content root path: C:\Projetos\.NET\Rent_Motorcycle
+2024-04-22 21:14:43.630 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/index.html - -
+2024-04-22 21:14:44.566 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - -
+2024-04-22 21:14:44.571 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/index.html - - - 200 - text/html;charset=utf-8 947.0424ms
+2024-04-22 21:14:44.601 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - - - 200 12362 application/javascript;+charset=utf-8 35.4136ms
+2024-04-22 21:14:44.636 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_vs/browserLink - -
+2024-04-22 21:14:44.730 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 93.8114ms
+2024-04-22 21:14:44.849 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - -
+2024-04-22 21:14:45.075 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 226.0206ms
+2024-04-22 21:15:09.245 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Entregador/all-delivery-drivers - -
+2024-04-22 21:15:09.268 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.EntregadorController.GetEntregadores (Rent_Motorcycle)'
+2024-04-22 21:15:09.311 -03:00 [INF] Route matched with {action = "GetEntregadores", controller = "Entregador"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetEntregadores() on controller Rent_Motorcycle.Controllers.EntregadorController (Rent_Motorcycle).
+2024-04-22 21:17:20.671 -03:00 [INF] Now listening on: https://localhost:7048
+2024-04-22 21:17:20.725 -03:00 [INF] Now listening on: http://localhost:5049
+2024-04-22 21:17:20.729 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-04-22 21:17:20.731 -03:00 [INF] Hosting environment: Development
+2024-04-22 21:17:20.732 -03:00 [INF] Content root path: C:\Projetos\.NET\Rent_Motorcycle
+2024-04-22 21:17:21.597 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/index.html - -
+2024-04-22 21:17:22.348 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/index.html - - - 200 - text/html;charset=utf-8 760.6667ms
+2024-04-22 21:17:22.355 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - -
+2024-04-22 21:17:22.373 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - - - 200 12362 application/javascript;+charset=utf-8 18.3945ms
+2024-04-22 21:17:22.412 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_vs/browserLink - -
+2024-04-22 21:17:22.499 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 86.7910ms
+2024-04-22 21:17:22.628 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - -
+2024-04-22 21:17:22.907 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 278.2996ms
+2024-04-22 21:17:31.030 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Entregador/all-delivery-drivers - -
+2024-04-22 21:17:31.047 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.EntregadorController.GetEntregadores (Rent_Motorcycle)'
+2024-04-22 21:17:31.097 -03:00 [INF] Route matched with {action = "GetEntregadores", controller = "Entregador"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] GetEntregadores() on controller Rent_Motorcycle.Controllers.EntregadorController (Rent_Motorcycle).
+2024-04-22 21:17:31.628 -03:00 [ERR] Invalid endpoint, uploading to local storage... - "2024-04-22T21:17:31.6274443-03:00". Data: {MinhaData}
+2024-04-22 21:17:31.647 -03:00 [INF] Starting the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:17:31.6467699-03:00"
+2024-04-22 21:17:31.670 -03:00 [INF] Starting the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:17:31.6698100-03:00"
+2024-04-22 21:17:33.383 -03:00 [INF] Executed DbCommand (40ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Entregadores" AS e
+2024-04-22 21:17:33.476 -03:00 [INF] Finishing the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:17:33.4765207-03:00"
+2024-04-22 21:17:33.478 -03:00 [INF] Finishing the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:17:33.4788652-03:00"
+2024-04-22 21:17:33.489 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Entregador, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 21:17:33.521 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.EntregadorController.GetEntregadores (Rent_Motorcycle) in 2417.5312ms
+2024-04-22 21:17:33.525 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.EntregadorController.GetEntregadores (Rent_Motorcycle)'
+2024-04-22 21:17:33.537 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Entregador/all-delivery-drivers - - - 200 - application/json;+charset=utf-8 2507.7387ms
+2024-04-22 21:18:31.331 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?nome=Gio - -
+2024-04-22 21:18:31.346 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:18:31.361 -03:00 [INF] Route matched with {action = "PesquisarEntregador", controller = "Entregador"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarEntregador(System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.String) on controller Rent_Motorcycle.Controllers.EntregadorController (Rent_Motorcycle).
+2024-04-22 21:18:31.400 -03:00 [ERR] Invalid endpoint, uploading to local storage... - "2024-04-22T21:18:31.4008391-03:00". Data: {MinhaData}
+2024-04-22 21:18:31.436 -03:00 [INF] Starting the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:18:31.4368680-03:00"
+2024-04-22 21:18:31.438 -03:00 [INF] Starting the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:18:31.4381413-03:00"
+2024-04-22 21:18:31.622 -03:00 [INF] Executed DbCommand (13ms) [Parameters=[@__nome_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Entregadores" AS e
+WHERE @__nome_0 = '' OR strpos(e."Nome", @__nome_0) > 0
+2024-04-22 21:18:31.627 -03:00 [INF] Finishing the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:18:31.6275477-03:00"
+2024-04-22 21:18:31.629 -03:00 [INF] Finishing the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:18:31.6293164-03:00"
+2024-04-22 21:18:31.631 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Entregador, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 21:18:31.633 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle) in 268.6972ms
+2024-04-22 21:18:31.634 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:18:31.636 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?nome=Gio - - - 200 - application/json;+charset=utf-8 304.7044ms
+2024-04-22 21:18:40.326 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?nome=Lu - -
+2024-04-22 21:18:40.329 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:18:40.332 -03:00 [INF] Route matched with {action = "PesquisarEntregador", controller = "Entregador"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarEntregador(System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.String) on controller Rent_Motorcycle.Controllers.EntregadorController (Rent_Motorcycle).
+2024-04-22 21:18:40.374 -03:00 [ERR] Invalid endpoint, uploading to local storage... - "2024-04-22T21:18:40.3748734-03:00". Data: {MinhaData}
+2024-04-22 21:18:40.382 -03:00 [INF] Starting the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:18:40.3822966-03:00"
+2024-04-22 21:18:40.384 -03:00 [INF] Starting the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:18:40.3843955-03:00"
+2024-04-22 21:18:40.465 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__nome_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Entregadores" AS e
+WHERE @__nome_0 = '' OR strpos(e."Nome", @__nome_0) > 0
+2024-04-22 21:18:40.468 -03:00 [INF] Finishing the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:18:40.4681536-03:00"
+2024-04-22 21:18:40.469 -03:00 [INF] Finishing the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:18:40.4692517-03:00"
+2024-04-22 21:18:40.470 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Entregador, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 21:18:40.471 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle) in 136.7632ms
+2024-04-22 21:18:40.473 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:18:40.474 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?nome=Lu - - - 200 - application/json;+charset=utf-8 148.2364ms
+2024-04-22 21:18:57.903 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?tipoCNH=A - -
+2024-04-22 21:18:57.917 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:18:57.919 -03:00 [INF] Route matched with {action = "PesquisarEntregador", controller = "Entregador"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarEntregador(System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.String) on controller Rent_Motorcycle.Controllers.EntregadorController (Rent_Motorcycle).
+2024-04-22 21:18:57.957 -03:00 [ERR] Invalid endpoint, uploading to local storage... - "2024-04-22T21:18:57.9572191-03:00". Data: {MinhaData}
+2024-04-22 21:18:57.959 -03:00 [INF] Starting the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:18:57.9593224-03:00"
+2024-04-22 21:18:57.960 -03:00 [INF] Starting the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:18:57.9605919-03:00"
+2024-04-22 21:18:57.973 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__tipoCNH_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Entregadores" AS e
+WHERE e."TipoCNH" = @__tipoCNH_0
+2024-04-22 21:18:57.977 -03:00 [INF] Finishing the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:18:57.9773718-03:00"
+2024-04-22 21:18:57.978 -03:00 [INF] Finishing the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:18:57.9781486-03:00"
+2024-04-22 21:18:57.979 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Entregador, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 21:18:57.980 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle) in 57.9275ms
+2024-04-22 21:18:57.981 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:18:57.982 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?tipoCNH=A - - - 200 - application/json;+charset=utf-8 79.2114ms
+2024-04-22 21:19:08.888 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?tipoCNH=B - -
+2024-04-22 21:19:08.890 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:19:08.892 -03:00 [INF] Route matched with {action = "PesquisarEntregador", controller = "Entregador"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarEntregador(System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.String) on controller Rent_Motorcycle.Controllers.EntregadorController (Rent_Motorcycle).
+2024-04-22 21:19:08.929 -03:00 [ERR] Invalid endpoint, uploading to local storage... - "2024-04-22T21:19:08.9292964-03:00". Data: {MinhaData}
+2024-04-22 21:19:08.931 -03:00 [INF] Starting the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:19:08.9311095-03:00"
+2024-04-22 21:19:08.932 -03:00 [INF] Starting the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:19:08.9321313-03:00"
+2024-04-22 21:19:08.936 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__tipoCNH_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Entregadores" AS e
+WHERE e."TipoCNH" = @__tipoCNH_0
+2024-04-22 21:19:08.941 -03:00 [INF] Finishing the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:19:08.9414203-03:00"
+2024-04-22 21:19:08.942 -03:00 [INF] Finishing the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:19:08.9425398-03:00"
+2024-04-22 21:19:08.943 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Entregador, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 21:19:08.945 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle) in 51.1585ms
+2024-04-22 21:19:08.947 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:19:08.948 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?tipoCNH=B - - - 200 - application/json;+charset=utf-8 59.8611ms
+2024-04-22 21:19:14.145 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?tipoCNH=AB - -
+2024-04-22 21:19:14.147 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:19:14.151 -03:00 [INF] Route matched with {action = "PesquisarEntregador", controller = "Entregador"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] PesquisarEntregador(System.Nullable`1[System.DateTime], System.String, System.String, System.String, System.String) on controller Rent_Motorcycle.Controllers.EntregadorController (Rent_Motorcycle).
+2024-04-22 21:19:14.198 -03:00 [ERR] Invalid endpoint, uploading to local storage... - "2024-04-22T21:19:14.1987858-03:00". Data: {MinhaData}
+2024-04-22 21:19:14.208 -03:00 [INF] Starting the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:19:14.2085452-03:00"
+2024-04-22 21:19:14.211 -03:00 [INF] Starting the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:19:14.2117575-03:00"
+2024-04-22 21:19:14.217 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[@__tipoCNH_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT e."Id", e."CNH", e."CNPJ", e."DataNascimento", e."ImagemCNHUrl", e."Nome", e."TipoCNH"
+FROM public."Entregadores" AS e
+WHERE e."TipoCNH" = @__tipoCNH_0
+2024-04-22 21:19:14.224 -03:00 [INF] Finishing the Service ConsultarEntregadores of EntregadorService... - "2024-04-22T21:19:14.2246088-03:00"
+2024-04-22 21:19:14.227 -03:00 [INF] Finishing the Controller GetEntregadores of EntregadorController... - "2024-04-22T21:19:14.2269910-03:00"
+2024-04-22 21:19:14.228 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Collections.Generic.List`1[[Rent_Motorcycle.Models.Entregador, Rent_Motorcycle, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]'.
+2024-04-22 21:19:14.231 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle) in 70.1214ms
+2024-04-22 21:19:14.234 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.EntregadorController.PesquisarEntregador (Rent_Motorcycle)'
+2024-04-22 21:19:14.236 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/api/Entregador/search-delivery-driver?tipoCNH=AB - - - 200 - application/json;+charset=utf-8 90.8293ms
+2024-04-22 21:31:26.835 -03:00 [INF] Now listening on: https://localhost:7048
+2024-04-22 21:31:26.928 -03:00 [INF] Now listening on: http://localhost:5049
+2024-04-22 21:31:26.938 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2024-04-22 21:31:26.941 -03:00 [INF] Hosting environment: Development
+2024-04-22 21:31:26.943 -03:00 [INF] Content root path: C:\Projetos\.NET\Rent_Motorcycle
+2024-04-22 21:31:27.985 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/index.html - -
+2024-04-22 21:31:29.019 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/index.html - - - 200 - text/html;charset=utf-8 1030.7629ms
+2024-04-22 21:31:29.045 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - -
+2024-04-22 21:31:29.070 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_framework/aspnetcore-browser-refresh.js - - - 200 12362 application/javascript;+charset=utf-8 24.2174ms
+2024-04-22 21:31:29.111 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/_vs/browserLink - -
+2024-04-22 21:31:29.206 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/_vs/browserLink - - - 200 - text/javascript;+charset=UTF-8 94.8355ms
+2024-04-22 21:31:29.400 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - -
+2024-04-22 21:31:29.785 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7048/swagger/v1/swagger.json - - - 200 - application/json;charset=utf-8 384.6911ms
+2024-04-22 21:31:49.856 -03:00 [INF] Request starting HTTP/2 PUT https://localhost:7048/api/Moto/modify-moto/8?novaPlaca=JGC8807 - 0
+2024-04-22 21:31:49.875 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.MotoController.ModificarMoto (Rent_Motorcycle)'
+2024-04-22 21:31:49.946 -03:00 [INF] Route matched with {action = "ModificarMoto", controller = "Moto"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ModificarMoto(Int32, System.String) on controller Rent_Motorcycle.Controllers.MotoController (Rent_Motorcycle).
+2024-04-22 21:31:50.460 -03:00 [INF] Starting the Controller ModificarMoto of MotoController... - "2024-04-22T21:31:50.4603604-03:00"
+2024-04-22 21:31:50.468 -03:00 [INF] Starting the Service ModificarMoto of MotoService... - "2024-04-22T21:31:50.4681950-03:00"
+2024-04-22 21:31:52.375 -03:00 [INF] Executed DbCommand (73ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Ano", m."Modelo", m."Placa"
+FROM public."Motos" AS m
+WHERE m."Id" = @__p_0
+LIMIT 1
+2024-04-22 21:31:52.479 -03:00 [INF] Executed DbCommand (13ms) [Parameters=[@__novaPlaca_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM public."Motos" AS m
+    WHERE m."Placa" = @__novaPlaca_0)
+2024-04-22 21:31:52.650 -03:00 [ERR] Error when modifying motorcycle - A motorcycle with the new license plate already exists.. Data: "2024-04-22T21:31:52.6493162-03:00"
+2024-04-22 21:31:52.739 -03:00 [ERR] Error when modifying motorcycle - Error when modifying motorcycle: A motorcycle with the new license plate already exists.. Data: "2024-04-22T21:31:52.7393994-03:00"
+2024-04-22 21:31:52.756 -03:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2024-04-22 21:31:52.766 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.MotoController.ModificarMoto (Rent_Motorcycle) in 2810.6423ms
+2024-04-22 21:31:52.768 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.MotoController.ModificarMoto (Rent_Motorcycle)'
+2024-04-22 21:31:52.782 -03:00 [INF] Request finished HTTP/2 PUT https://localhost:7048/api/Moto/modify-moto/8?novaPlaca=JGC8807 - 0 - 500 - text/plain;+charset=utf-8 2926.0831ms
+2024-04-22 21:33:03.473 -03:00 [INF] Request starting HTTP/2 PUT https://localhost:7048/api/Moto/modify-moto/8?novaPlaca=JJV8429 - 0
+2024-04-22 21:33:03.507 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.MotoController.ModificarMoto (Rent_Motorcycle)'
+2024-04-22 21:33:03.509 -03:00 [INF] Route matched with {action = "ModificarMoto", controller = "Moto"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] ModificarMoto(Int32, System.String) on controller Rent_Motorcycle.Controllers.MotoController (Rent_Motorcycle).
+2024-04-22 21:33:03.521 -03:00 [INF] Starting the Controller ModificarMoto of MotoController... - "2024-04-22T21:33:03.5215060-03:00"
+2024-04-22 21:33:03.523 -03:00 [INF] Starting the Service ModificarMoto of MotoService... - "2024-04-22T21:33:03.5232647-03:00"
+2024-04-22 21:33:03.624 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Ano", m."Modelo", m."Placa"
+FROM public."Motos" AS m
+WHERE m."Id" = @__p_0
+LIMIT 1
+2024-04-22 21:33:03.634 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__novaPlaca_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM public."Motos" AS m
+    WHERE m."Placa" = @__novaPlaca_0)
+2024-04-22 21:33:03.808 -03:00 [INF] Executed DbCommand (16ms) [Parameters=[@p1='?' (DbType = Int32), @p0='?'], CommandType='"Text"', CommandTimeout='30']
+UPDATE public."Motos" SET "Placa" = @p0
+WHERE "Id" = @p1;
+2024-04-22 21:33:03.842 -03:00 [INF] Finishing the Service ModificarMoto of MotoService... - "2024-04-22T21:33:03.8423064-03:00"
+2024-04-22 21:33:03.843 -03:00 [INF] Finishing the Controller ModificarMoto of MotoController... - "2024-04-22T21:33:03.8437929-03:00"
+2024-04-22 21:33:03.849 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-04-22 21:33:03.865 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.MotoController.ModificarMoto (Rent_Motorcycle) in 351.9867ms
+2024-04-22 21:33:03.867 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.MotoController.ModificarMoto (Rent_Motorcycle)'
+2024-04-22 21:33:03.869 -03:00 [INF] Request finished HTTP/2 PUT https://localhost:7048/api/Moto/modify-moto/8?novaPlaca=JJV8429 - 0 - 200 - application/json;+charset=utf-8 396.3207ms
+2024-04-22 21:34:04.998 -03:00 [INF] Request starting HTTP/2 DELETE https://localhost:7048/api/Moto/remove-moto/3 - -
+2024-04-22 21:34:05.012 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.MotoController.RemoverMoto (Rent_Motorcycle)'
+2024-04-22 21:34:05.019 -03:00 [INF] Route matched with {action = "RemoverMoto", controller = "Moto"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RemoverMoto(Int32) on controller Rent_Motorcycle.Controllers.MotoController (Rent_Motorcycle).
+2024-04-22 21:34:05.029 -03:00 [INF] Starting the Controller RemoverMoto of MotoController... - "2024-04-22T21:34:05.0299122-03:00"
+2024-04-22 21:34:05.032 -03:00 [INF] Starting the Service RemoverMoto of MotoService... - "2024-04-22T21:34:05.0328037-03:00"
+2024-04-22 21:34:05.062 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Ano", m."Modelo", m."Placa"
+FROM public."Motos" AS m
+WHERE m."Id" = @__p_0
+LIMIT 1
+2024-04-22 21:34:05.084 -03:00 [INF] Executed DbCommand (9ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM public."Locacoes" AS l
+    WHERE l."MotoId" = @__id_0)
+2024-04-22 21:34:05.206 -03:00 [ERR] Error when removing motorcycle - This motorcycle cannot be removed because it has associated rentals.. Data: "2024-04-22T21:34:05.2063670-03:00"
+2024-04-22 21:34:05.315 -03:00 [ERR] Error when removing motorcycle - Error when removing motorcycle: This motorcycle cannot be removed because it has associated rentals.. Data: "2024-04-22T21:34:05.3152527-03:00"
+2024-04-22 21:34:05.317 -03:00 [INF] Executing ObjectResult, writing value of type 'System.String'.
+2024-04-22 21:34:05.319 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.MotoController.RemoverMoto (Rent_Motorcycle) in 297.4189ms
+2024-04-22 21:34:05.322 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.MotoController.RemoverMoto (Rent_Motorcycle)'
+2024-04-22 21:34:05.325 -03:00 [INF] Request finished HTTP/2 DELETE https://localhost:7048/api/Moto/remove-moto/3 - - - 500 - text/plain;+charset=utf-8 326.7747ms
+2024-04-22 21:34:32.964 -03:00 [INF] Request starting HTTP/2 DELETE https://localhost:7048/api/Moto/remove-moto/7 - -
+2024-04-22 21:34:32.978 -03:00 [INF] Executing endpoint 'Rent_Motorcycle.Controllers.MotoController.RemoverMoto (Rent_Motorcycle)'
+2024-04-22 21:34:32.981 -03:00 [INF] Route matched with {action = "RemoverMoto", controller = "Moto"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] RemoverMoto(Int32) on controller Rent_Motorcycle.Controllers.MotoController (Rent_Motorcycle).
+2024-04-22 21:34:32.985 -03:00 [INF] Starting the Controller RemoverMoto of MotoController... - "2024-04-22T21:34:32.9849876-03:00"
+2024-04-22 21:34:32.986 -03:00 [INF] Starting the Service RemoverMoto of MotoService... - "2024-04-22T21:34:32.9864346-03:00"
+2024-04-22 21:34:32.991 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[@__p_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Ano", m."Modelo", m."Placa"
+FROM public."Motos" AS m
+WHERE m."Id" = @__p_0
+LIMIT 1
+2024-04-22 21:34:32.997 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[@__id_0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM public."Locacoes" AS l
+    WHERE l."MotoId" = @__id_0)
+2024-04-22 21:34:33.036 -03:00 [INF] Executed DbCommand (4ms) [Parameters=[@p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+DELETE FROM public."Motos"
+WHERE "Id" = @p0;
+2024-04-22 21:34:33.043 -03:00 [INF] Finishing the Service RemoverMoto of MotoService... - "2024-04-22T21:34:33.0436720-03:00"
+2024-04-22 21:34:33.045 -03:00 [INF] Finishing the Controller RemoverMoto of MotoController... - "2024-04-22T21:34:33.0452378-03:00"
+2024-04-22 21:34:33.046 -03:00 [INF] Executing OkObjectResult, writing value of type 'System.Boolean'.
+2024-04-22 21:34:33.048 -03:00 [INF] Executed action Rent_Motorcycle.Controllers.MotoController.RemoverMoto (Rent_Motorcycle) in 64.8542ms
+2024-04-22 21:34:33.051 -03:00 [INF] Executed endpoint 'Rent_Motorcycle.Controllers.MotoController.RemoverMoto (Rent_Motorcycle)'
+2024-04-22 21:34:33.054 -03:00 [INF] Request finished HTTP/2 DELETE https://localhost:7048/api/Moto/remove-moto/7 - - - 200 - application/json;+charset=utf-8 89.1777ms

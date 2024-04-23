@@ -47,6 +47,58 @@ namespace Rent_Motorcycle.Controllers
         }
 
         /// <summary>
+        /// Endpoint to retrieve all delivery drivers.
+        /// </summary>
+        /// <returns>List of all delivery drivers.</returns>
+        [HttpGet("all-delivery-drivers")]
+        public async Task<IActionResult> GetEntregadores()
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Controller GetEntregadores of EntregadorController... - {Data}", DateTime.Now);
+                var entregadores = await _entregadorService.ConsultarEntregadores(null, null, null, null, null);
+                _logger.LogInformation("Finishing the Controller GetEntregadores of EntregadorController... - {Data}", DateTime.Now);
+                return Ok(entregadores);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when querying delivery driver - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                return StatusCode(500, $"Error when querying delivery driver: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Endpoint to search delivery driver by filters.
+        /// </summary>
+        /// <param name="dataNascimento">Start date of the rental period.</param>
+        /// <param name="nome">Expected end date of the rental period.</param>
+        /// <param name="cnpj">Name of the rental plan type.</param>
+        /// <param name="cnh">Model of the motorcycle.</param>
+        /// <param name="tipoCNH">license plate</param>
+        /// <returns>List of delivery driver matching the specified filters.</returns>
+        [HttpGet("search-delivery-driver")]
+        public async Task<IActionResult> PesquisarEntregador(
+            DateTime? dataNascimento,
+            string? nome,
+            string? cnpj,
+            string? cnh,
+            string? tipoCNH)
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Controller GetEntregadores of EntregadorController... - {Data}", DateTime.Now);
+                var locacoes = await _entregadorService.ConsultarEntregadores(dataNascimento, nome, cnpj, cnh, tipoCNH);
+                _logger.LogInformation("Finishing the Controller GetEntregadores of EntregadorController... - {Data}", DateTime.Now);
+                return Ok(locacoes);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when querying delivery driver by filters - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                return StatusCode(500, $"Error when querying delivery driver by filters: {ex.Message}");
+            }
+        }
+
+        /// <summary>
         /// Endpoint for image upload.
         /// </summary>
         /// <param name="imagem">Image to be sent.</param>

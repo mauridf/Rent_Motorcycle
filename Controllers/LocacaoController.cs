@@ -82,5 +82,63 @@ namespace Rent_Motorcycle.Controllers
                 return StatusCode(500, $"Error when making rental: {ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Endpoint to retrieve all rentals.
+        /// </summary>
+        /// <returns>List of all rentals.</returns>
+        [HttpGet("all-rentals")]
+        public async Task<IActionResult> GetLocacoes()
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Controller GetLocacoes of LocacaoController... - {Data}", DateTime.Now);
+                var locacoes = await _locacaoService.ConsultarLocacoes(null, null, null, null, null, null, null, null);
+                _logger.LogInformation("Finishing the Controller GetLocacoes of LocacaoController... - {Data}", DateTime.Now);
+                return Ok(locacoes);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when querying rentals - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                return StatusCode(500, $"Error when querying rentals: {ex.Message}");
+            }
+        }
+
+        /// <summary>
+        /// Endpoint to search rentals by filters.
+        /// </summary>
+        /// <param name="dataInicio">Start date of the rental period.</param>
+        /// <param name="dataPrevistaTermino">Expected end date of the rental period.</param>
+        /// <param name="tipoPlanoNome">Name of the rental plan type.</param>
+        /// <param name="motoModelo">Model of the motorcycle.</param>
+        /// <param name="motoPlaca">license plate</param>
+        /// <param name="entregadorId">ID of the delivery person.</param>
+        /// <param name="valorMinimo">Minimum rental value.</param>
+        /// <param name="valorMaximo">Maximum rental value.</param>
+        /// <returns>List of rentals matching the specified filters.</returns>
+        [HttpGet("search-rental")]
+        public async Task<IActionResult> PesquisarLocacoes(
+            DateTime? dataInicio,
+            DateTime? dataPrevistaTermino,
+            string? tipoPlanoNome,
+            string? motoModelo,
+            string? motoPlaca,
+            int? entregadorId,
+            decimal? valorMinimo,
+            decimal? valorMaximo)
+        {
+            try
+            {
+                _logger.LogInformation("Starting the Controller PesquisarLocacoes of LocacaoController... - {Data}", DateTime.Now);
+                var locacoes = await _locacaoService.ConsultarLocacoes(dataInicio, dataPrevistaTermino, tipoPlanoNome, motoModelo, motoPlaca, entregadorId, valorMinimo, valorMaximo);
+                _logger.LogInformation("Finishing the Controller PesquisarLocacoes of LocacaoController... - {Data}", DateTime.Now);
+                return Ok(locacoes);
+            }
+            catch (Exception ex)
+            {
+                Log.Error("Error when querying rentals by filters - {MinhaMsgErro}. Data: {MinhaData}", ex.Message, DateTime.Now);
+                return StatusCode(500, $"Error when querying rentals by filters: {ex.Message}");
+            }
+        }
     }
 }
